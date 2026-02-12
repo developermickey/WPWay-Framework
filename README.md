@@ -2,6 +2,8 @@
 
 **WPWay** is a comprehensive, modern frontend framework designed specifically for WordPress. It brings React-like component patterns, SPA navigation, server-side rendering, Gutenberg block reactivity, and a robust plugin ecosystem to the WordPress ecosystem.
 
+**Created by:** [Mukesh Pathak](https://github.com/developermickey) | [GitHub Repository](https://github.com/developermickey/WPWay-Framework)
+
 ## 🚀 Key Features
 
 ### Core Framework
@@ -460,6 +462,10 @@ A: Yes! WPWay works great with decoupled WordPress architectures.
 ## 🎉 Credits
 
 Built with ❤️ for the WordPress community.
+
+**Creator:** Mukesh Pathak  
+**GitHub:** https://github.com/developermickey  
+**Project:** https://github.com/developermickey/WPWay-Framework
 
 **Current Version:** 1.0.0  
 **Last Updated:** February 2026  
