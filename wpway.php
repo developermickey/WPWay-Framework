@@ -35,6 +35,8 @@ function wpway_initialize() {
     if (file_exists($bootstrap_file)) {
         try {
             require_once $bootstrap_file;
+            // IMPORTANT: Call init() to actually initialize the framework
+            \WPWay\BootstrapSimple::init();
         } catch (\Exception $e) {
             // Log error but don't crash
             error_log('[WPWay] Fatal Error: ' . $e->getMessage());
