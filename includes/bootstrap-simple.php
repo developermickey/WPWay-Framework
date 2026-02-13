@@ -16,15 +16,18 @@ final class BootstrapSimple {
      */
     public static function init() {
         if (self::$initialized) {
+            error_log('[WPWay] Framework already initialized');
             return;
         }
 
         self::$initialized = true;
+        error_log('[WPWay] === Framework Initialization Starting ===');
         
         // Step 1: Load config only
         self::safeRequire(__DIR__ . '/config.php');
         
         // Step 2: Initialize configuration
+        error_log('[WPWay] Step 2: Initializing configuration');
         if (class_exists('WPWay\Config\Configuration')) {
             try {
                 \WPWay\Config\Configuration::init(plugin_dir_url(__DIR__ . '/../wpway.php'));
@@ -34,11 +37,13 @@ final class BootstrapSimple {
         }
         
         // Step 3: Load core framework
+        error_log('[WPWay] Step 3: Loading core framework');
         self::safeRequire(__DIR__ . '/core/framework.php');
         self::safeRequire(__DIR__ . '/core/component.php');
         self::safeRequire(__DIR__ . '/core/virtual-dom.php');
 
         // Step 4: Load other modules
+        error_log('[WPWay] Step 4: Loading additional modules');
         self::safeRequire(__DIR__ . '/router/router.php');
         self::safeRequire(__DIR__ . '/state/store.php');
         self::safeRequire(__DIR__ . '/gutenberg/blocks.php');
@@ -47,15 +52,17 @@ final class BootstrapSimple {
         self::safeRequire(__DIR__ . '/performance/optimizer.php');
         self::safeRequire(__DIR__ . '/dev-tools.php');
         
-        // Step 5: Load admin menu/dashboard
-        self::safeRequire(__DIR__ . '/admin/menu.php');
+        // Step 5: Load admin menu/dashboard (temporarily disabled for debugging)
+        error_log('[WPWay] Step 5: Skipping admin menu for now (debugging)');
+        // self::safeRequire(__DIR__ . '/admin/menu.php');
 
         // Step 6: Register hooks
+        error_log('[WPWay] Step 6: Registering hooks');
         add_action('wp_enqueue_scripts', [self::class, 'enqueueAssets']);
         add_action('admin_enqueue_scripts', [self::class, 'enqueueAdminAssets']);
         add_action('init', [self::class, 'registerComponents']);
         
-        error_log('[WPWay] Framework initialized successfully');
+        error_log('[WPWay] === Framework Initialization Complete ===');
     }
 
     /**
@@ -64,13 +71,20 @@ final class BootstrapSimple {
     private static function safeRequire($file) {
         if (!file_exists($file)) {
             error_log('[WPWay] File not found: ' . $file);
-            return;
+            return false;
         }
 
+        $filename = basename($file);
+        error_log('[WPWay] Loading: ' . $filename);
+        
         try {
             require_once $file;
-        } catch (\Exception $e) {
-            error_log('[WPWay] Error including ' . basename($file) . ': ' . $e->getMessage());
+            error_log('[WPWay] ✓ Loaded: ' . $filename);
+            return true;
+        } catch (\Throwable $e) {
+            error_log('[WPWay] ERROR loading ' . $filename . ': ' . $e->getMessage());
+            error_log('[WPWay] Line: ' . $e->getLine());
+            return false;
         }
     }
 

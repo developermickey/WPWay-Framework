@@ -30,47 +30,42 @@ add_action('plugins_loaded', 'wpway_initialize', 5);
  */
 function wpway_initialize() {
     // Log initialization start
-    error_log('[WPWay] Initialization started');
+    error_log('[WPWay] === INITIALIZATION STARTED ===');
     
-    // Load bootstrap
+    // Load bootstrap file
     $bootstrap_file = WPWAY_DIR . 'includes/bootstrap-simple.php';
+    error_log('[WPWay] Bootstrap file path: ' . $bootstrap_file);
     
     if (!file_exists($bootstrap_file)) {
-        error_log('[WPWay] Bootstrap file not found: ' . $bootstrap_file);
+        error_log('[WPWay] ERROR: Bootstrap file not found!');
         return;
     }
     
-    // Check if bootstrap can be included
-    error_log('[WPWay] Loading bootstrap from: ' . $bootstrap_file);
+    error_log('[WPWay] Bootstrap file exists, including it...');
     
-    // Use output buffering to catch any output
-    ob_start();
-    try {
-        require_once $bootstrap_file;
-    } catch (\Exception $e) {
-        ob_end_clean();
-        error_log('[WPWay] Exception during bootstrap load: ' . $e->getMessage());
-        error_log('[WPWay] Exception file: ' . $e->getFile() . ' Line: ' . $e->getLine());
-        return;
-    }
-    ob_end_clean();
+    // Include the bootstrap file
+    require_once $bootstrap_file;
     
-    // Log bootstrap loaded
-    error_log('[WPWay] Bootstrap file loaded successfully');
+    error_log('[WPWay] Bootstrap file included');
     
-    // Now initialize the framework
+    // Check if class exists
     if (class_exists('WPWay\BootstrapSimple')) {
-        error_log('[WPWay] BootstrapSimple class found, calling init()');
+        error_log('[WPWay] BootstrapSimple class found');
+        
+        // Call init
         try {
             \WPWay\BootstrapSimple::init();
-            error_log('[WPWay] Framework init() completed successfully');
-        } catch (\Exception $e) {
-            error_log('[WPWay] Exception during init(): ' . $e->getMessage());
-            error_log('[WPWay] Exception file: ' . $e->getFile() . ' Line: ' . $e->getLine());
+            error_log('[WPWay] init() called successfully');
+        } catch (Throwable $e) {
+            error_log('[WPWay] ERROR in init(): ' . $e->getMessage());
+            error_log('[WPWay] Stack trace: ' . $e->getTraceAsString());
         }
     } else {
-        error_log('[WPWay] BootstrapSimple class NOT FOUND after including bootstrap file');
+        error_log('[WPWay] ERROR: BootstrapSimple class NOT found after including bootstrap');
+        error_log('[WPWay] Declared classes: ' . implode(', ', get_declared_classes()));
     }
+    
+    error_log('[WPWay] === INITIALIZATION COMPLETE ===');
 }
 
 // ============================================================================
