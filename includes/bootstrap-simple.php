@@ -47,9 +47,8 @@ final class BootstrapSimple {
         self::safeRequire(__DIR__ . '/performance/optimizer.php');
         self::safeRequire(__DIR__ . '/dev-tools.php');
         
-        // Step 5: Load admin dashboard (always load, it handles its own conditionals)
-        self::safeRequire(__DIR__ . '/admin/dashboard.php');
-        self::safeRequire(__DIR__ . '/admin/diagnostic.php');
+        // Step 5: Load admin menu/dashboard
+        self::safeRequire(__DIR__ . '/admin/menu.php');
 
         // Step 6: Register hooks
         add_action('wp_enqueue_scripts', [self::class, 'enqueueAssets']);
