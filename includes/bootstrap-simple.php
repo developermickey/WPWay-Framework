@@ -46,8 +46,13 @@ final class BootstrapSimple {
         self::safeRequire(__DIR__ . '/plugin-api/plugin-system.php');
         self::safeRequire(__DIR__ . '/performance/optimizer.php');
         self::safeRequire(__DIR__ . '/dev-tools.php');
+        
+        // Step 5: Load admin dashboard (if in admin area)
+        if (is_admin()) {
+            self::safeRequire(__DIR__ . '/admin/dashboard.php');
+        }
 
-        // Step 5: Register hooks
+        // Step 6: Register hooks
         add_action('wp_enqueue_scripts', [self::class, 'enqueueAssets']);
         add_action('admin_enqueue_scripts', [self::class, 'enqueueAdminAssets']);
         add_action('init', [self::class, 'registerComponents']);

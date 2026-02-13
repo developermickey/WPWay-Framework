@@ -1,0 +1,249 @@
+# WPWay Admin Dashboard - Quick Reference
+
+**Fast access to all dashboard features**
+
+---
+
+## 🎯 Main Menu Location
+
+**Where:** Left sidebar in WordPress admin (after WPWay plugin activation)
+
+**Menu Name:** "WPWay" with layout icon 📐
+
+---
+
+## 📍 Dashboard Sections
+
+### 1️⃣ Main Dashboard
+**Path:** WPWay → Dashboard
+
+**Shows:**
+- 6 quick cards (Components, Pages, Code Editor, Settings, Docs, Stats)
+- Quick stats (# components, # pages, # blocks)
+
+### 2️⃣ Components
+**Path:** WPWay → Components
+
+**Tabs:**
+- **Components List** - View all components with Edit/Delete buttons
+- **Create New** - Create new component with form and code editor
+
+### 3️⃣ Pages
+**Path:** WPWay → Pages
+
+**Features:**
+- List all WPWay pages
+- Create new page button
+- Edit/View/Delete buttons for each page
+
+### 4️⃣ Code Editor
+**Path:** WPWay → Code Editor
+
+**Features:**
+- Sidebar with component list
+- Full code editor (Ace)
+- Syntax highlighting (PHP, JS, CSS)
+- Save button
+
+### 5️⃣ Settings
+**Path:** WPWay → Settings
+
+**Sections:**
+- Framework settings (debug, cache, SSR, lazy load)
+- Advanced settings (SPA root, API prefix)
+
+### 6️⃣ Documentation
+**Path:** WPWay → Documentation
+
+**Sections:**
+- Getting Started
+- Components guide
+- Pages guide
+- REST API
+- Hooks & Filters
+- FAQ
+
+---
+
+## ⚡ Quick Tasks
+
+### Create Component (3 clicks)
+1. Click **WPWay** → **Components**
+2. Click "Create New" tab
+3. Fill form → Click **Create Component**
+
+### Edit Component (2 clicks)
+1. Click **WPWay** → **Code Editor**
+2. Click component → Edit → **Save**
+
+### Delete Component (2 clicks)
+1. Click **WPWay** → **Components**
+2. Click **Delete** button
+
+### Create Page (3 clicks)
+1. Click **WPWay** → **Pages**
+2. Click "Create New Page"
+3. Fill form → Click **Create Page**
+
+### Change Settings (2 clicks)
+1. Click **WPWay** → **Settings**
+2. Modify → Click **Save Settings**
+
+---
+
+## 🔑 Keyboard Shortcuts
+
+| Shortcut | What It Does |
+|----------|------------|
+| Ctrl+S | Save component (in Code Editor) |
+| Ctrl+F | Search in code |
+| Ctrl+H | Find & Replace |
+
+---
+
+## 📋 Component Creation Form
+
+**Step 1: Component Name**
+```
+Required: Component name
+Example: Hero, BlogList, Card
+Format: PascalCase (MyComponent)
+```
+
+**Step 2: Component Type**
+```
+Options:
+- PHP Component (server-side)
+- JavaScript Component (client-side)
+- Hybrid (PHP + JS)
+```
+
+**Step 3: Description** (Optional)
+```
+What does this component do?
+Example: "Hero section with background image and CTA button"
+```
+
+**Step 4: Template** (Optional, PHP only)
+```
+Start with template:
+- Hero Section
+- Card
+- Blog List
+- Newsletter
+- Call to Action
+```
+
+**Step 5: Component Code**
+```
+PHP code for component
+(Code editor provided)
+```
+
+---
+
+## 📄 Create Page Form
+
+**Step 1: Page Title**
+```
+Name of the page
+Example: Home, About, Services
+```
+
+**Step 2: URL Slug** (Auto-generated)
+```
+URL part of page
+Auto-filled from title
+Example: /home, /about
+```
+
+**Step 3: Select Components**
+```
+Choose which components to use
+Example: Hero + BlogList + Newsletter
+```
+
+---
+
+## ⚙️ Settings Reference
+
+### Framework Settings
+- **Debug Mode** - Enable detailed logging
+- **Enable Caching** - Cache components for performance
+- **Server-Side Rendering** - Render on server (faster)
+- **Lazy Loading** - Load components on scroll
+- **Cache Duration** - How long to cache (seconds)
+
+### Advanced Settings
+- **SPA Root Element** - Container CSS selector (e.g., #app)
+- **REST API Prefix** - API endpoint (e.g., wpway/v1)
+
+---
+
+## 🎨 Component Templates
+
+| Template | What It Does |
+|----------|------------|
+| Hero | Large banner with title, subtitle, image, button |
+| Card | Small box with image, title, description, link |
+| Blog List | Display blog posts in grid |
+| Newsletter | Email subscription form |
+| CTA | Call-to-action section |
+
+---
+
+## ✅ Permissions
+
+**Who can access:**
+- ✅ Administrators only
+- ✅ Users with "manage_options" capability
+
+**Cannot be accessed by:**
+- ❌ Editors
+- ❌ Authors
+- ❌ Contributors
+- ❌ Subscribers
+
+---
+
+## 🔍 Common Issues & Quick Fixes
+
+| Issue | Fix |
+|-------|-----|
+| Menu not showing | Activate plugin + refresh page |
+| Components list empty | Create one using "Create New" |
+| Code editor not showing | Check browser supports Ace Editor |
+| Can't delete component | Check file permissions (644) |
+| Settings not saving | Check nonce in browser console |
+
+---
+
+## 🚀 Pro Tips
+
+1. **Use templates** - Start with built-in templates
+2. **Comment your code** - Add comments to explain logic
+3. **Save often** - Click Save while editing
+4. **Enable debug** - Turn on Debug Mode in Settings for logs
+5. **Organize files** - Create subfolders in components directory
+
+---
+
+## 📱 Mobile Access
+
+✅ Dashboard works on mobile/tablet
+- Responsive design
+- Touch-friendly buttons
+- Mobile-optimized code editor
+
+---
+
+## 🔗 Related Pages
+
+- 📖 [Full Dashboard Documentation](ADMIN_DASHBOARD.md)
+- 📦 [Component Creation Guide](CREATE_COMPONENTS.md)
+- 🔧 [Configuration & Setup](WORKFLOW.md)
+- 📚 [Getting Started](GETTING_STARTED.md)
+
+---
+
+**Need help? Check ADMIN_DASHBOARD.md or TROUBLESHOOTING.md** 📖

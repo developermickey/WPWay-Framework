@@ -1,0 +1,494 @@
+/* WPWay Admin Dashboard Styles */
+
+/* Main Dashboard Wrapper */
+.wpway-dashboard-wrap,
+.wpway-components-wrap,
+.wpway-pages-wrap,
+.wpway-code-editor-wrap,
+.wpway-settings-wrap,
+.wpway-docs-wrap {
+    max-width: 1400px;
+}
+
+/* Dashboard Grid */
+.wpway-dashboard-welcome {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.wpway-dashboard-welcome h2 {
+    color: white;
+    margin-top: 0;
+}
+
+.wpway-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+/* Cards */
+.wpway-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.wpway-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wpway-card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.wpway-card h3 {
+    margin: 15px 0;
+    color: #333;
+}
+
+.wpway-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Stats */
+.wpway-dashboard-stats {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 30px 0;
+}
+
+.wpway-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.stat-box strong {
+    display: block;
+    font-size: 28px;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.stat-box span {
+    display: block;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Tabs */
+.wpway-tabs {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.wpway-tab-btn {
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.wpway-tab-btn:hover {
+    background: #f5f5f5;
+}
+
+.wpway-tab-btn.active {
+    background: white;
+    color: #667eea;
+    border-top: 3px solid #667eea;
+}
+
+.wpway-tab-content {
+    display: none;
+    padding: 20px 0;
+}
+
+.wpway-tab-content.active {
+    display: block;
+}
+
+/* Forms */
+.wpway-form {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 20px 0;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-size: 12px;
+}
+
+/* Tables */
+.widefat {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+}
+
+.widefat thead {
+    background: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 2px solid #ddd;
+}
+
+.widefat th {
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+}
+
+.widefat td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.widefat tbody tr:hover {
+    background: #f9f9f9;
+}
+
+/* Modals */
+.wpway-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wpway-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.wpway-modal-close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+}
+
+.wpway-modal-close:hover {
+    color: #333;
+}
+
+/* Code Editor */
+.wpway-editor-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.wpway-editor-sidebar {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.wpway-editor-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-list li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    color: #666;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.file-list li:hover,
+.file-list li.active {
+    background: #f5f5f5;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.wpway-editor-main {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.wpway-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+}
+
+#wpway-code-editor-container {
+    background: white;
+}
+
+.wpway-editor-footer {
+    padding: 10px 20px;
+    background: #f5f5f5;
+    border-top: 1px solid #ddd;
+    font-size: 12px;
+    color: #666;
+}
+
+/* Documentation */
+.wpway-docs-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.wpway-docs-toc {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.wpway-docs-toc h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.wpway-docs-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wpway-docs-toc li {
+    margin-bottom: 10px;
+}
+
+.wpway-docs-toc a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.wpway-docs-toc a:hover {
+    text-decoration: underline;
+}
+
+.wpway-docs-content {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.wpway-docs-content h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.wpway-docs-content h2:first-child {
+    margin-top: 0;
+}
+
+.wpway-docs-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.wpway-docs-content dl {
+    margin: 20px 0;
+}
+
+.wpway-docs-content dt {
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.wpway-docs-content dd {
+    margin-left: 20px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wpway-dashboard-grid,
+    .wpway-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wpway-editor-container,
+    .wpway-docs-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .wpway-editor-sidebar,
+    .wpway-docs-toc {
+        position: relative;
+        top: auto;
+    }
+    
+    .wpway-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .file-list li {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+/* Loading State */
+.wpway-loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.wpway-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(102, 126, 234, 0.1);
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Success/Error Messages */
+.wpway-message {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border-left: 4px solid;
+}
+
+.wpway-message.success {
+    background: #d4edda;
+    color: #155724;
+    border-color: #28a745;
+}
+
+.wpway-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.wpway-message.warning {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #ffc107;
+}
+
+.wpway-message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
