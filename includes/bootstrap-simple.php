@@ -52,9 +52,9 @@ final class BootstrapSimple {
         self::safeRequire(__DIR__ . '/performance/optimizer.php');
         self::safeRequire(__DIR__ . '/dev-tools.php');
         
-        // Step 5: Load admin menu/dashboard (temporarily disabled for debugging)
-        error_log('[WPWay] Step 5: Skipping admin menu for now (debugging)');
-        // self::safeRequire(__DIR__ . '/admin/menu.php');
+        // Step 5: Load admin menu/dashboard
+        error_log('[WPWay] Step 5: Loading admin menu');
+        self::safeRequire(__DIR__ . '/admin/menu.php');
 
         // Step 6: Register hooks
         error_log('[WPWay] Step 6: Registering hooks');

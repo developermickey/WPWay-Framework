@@ -102,3 +102,22 @@ function wpway_deactivate() {
 register_activation_hook(__FILE__, 'wpway_activate');
 register_deactivation_hook(__FILE__, 'wpway_deactivate');
 
+// ============================================================================
+// PLUGIN ACTION LINKS - Add Dashboard link to plugin row
+// ============================================================================
+
+add_filter('plugin_action_links_wpway/wpway.php', 'wpway_add_action_links');
+
+/**
+ * Add Dashboard link to the plugin action links
+ * Shows "Dashboard" link on the plugin row next to Deactivate
+ */
+function wpway_add_action_links($links) {
+    // Add Dashboard link
+    $dashboard_link = '<a href="' . admin_url('admin.php?page=wpway-dashboard') . '" style="color: #0073aa;">Dashboard</a>';
+    
+    // Insert at the beginning
+    array_unshift($links, $dashboard_link);
+    
+    return $links;
+}
