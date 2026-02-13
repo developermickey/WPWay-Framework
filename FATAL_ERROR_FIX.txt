@@ -1,0 +1,150 @@
+📋 QUICK FIX - Fatal Error on Website
+════════════════════════════════════════════════════════════════════════════════
+
+This error means there's a PHP syntax or runtime error. Let's find it!
+
+════════════════════════════════════════════════════════════════════════════════
+STEP 1: Enable WordPress Debug Logging (2 minutes)
+════════════════════════════════════════════════════════════════════════════════
+
+1. Edit file: wp-config.php (in WordPress root folder)
+
+2. Find these lines:
+   define('WP_DEBUG', false);
+   define('WP_DEBUG_LOG', false);
+
+3. Replace with:
+   define('WP_DEBUG', true);
+   define('WP_DEBUG_LOG', true);
+   define('WP_DEBUG_DISPLAY', false);
+
+4. Save file
+
+════════════════════════════════════════════════════════════════════════════════
+STEP 2: Trigger the Error (30 seconds)
+════════════════════════════════════════════════════════════════════════════════
+
+1. Go to WordPress Admin
+2. Try to access any page
+3. You'll see the error again
+4. This logs the error to a file
+
+════════════════════════════════════════════════════════════════════════════════
+STEP 3: Check Error Log (1 minute)
+════════════════════════════════════════════════════════════════════════════════
+
+Using PowerShell or File Manager:
+
+1. Open: wp-content/debug.log
+
+2. Look at the LAST 30 LINES for errors
+
+3. Command in PowerShell:
+   Get-Content "wp-content\debug.log" -Tail 30
+
+4. Copy the error message
+
+════════════════════════════════════════════════════════════════════════════════
+WHAT TO LOOK FOR IN ERROR LOG
+════════════════════════════════════════════════════════════════════════════════
+
+You'll see something like:
+
+[13-Feb-2026 10:30:45 UTC] PHP Fatal error: Call to undefined method...
+[13-Feb-2026 10:30:45 UTC] PHP Parse error: syntax error, unexpected...
+[13-Feb-2026 10:30:45 UTC] PHP Warning: ...
+
+The error should mention:
+- Which file has the error
+- Which line number
+- What the error is
+
+════════════════════════════════════════════════════════════════════════════════
+COMMON ISSUES & FIXES
+════════════════════════════════════════════════════════════════════════════════
+
+If error mentions: "Call to undefined method WPWay\BootstrapSimple::init"
+└─ FIX: The namespace might be wrong
+    Edit wpway.php and change:
+    \WPWay\BootstrapSimple::init();
+    to:
+    WPWay\BootstrapSimple::init();
+
+If error mentions: "Parse error" or "Unexpected token"
+└─ FIX: Syntax error in PHP code
+    Check for: Missing semicolons, extra braces, quote mismatches
+
+If error mentions: "Cannot redeclare class"
+└─ FIX: File being included twice
+    Make sure admin/menu.php is only loaded once
+
+If error mentions: "File not found"
+└─ FIX: A required file is missing
+    Check file paths in bootstrap-simple.php
+
+════════════════════════════════════════════════════════════════════════════════
+QUICK DIAGNOSTIC
+════════════════════════════════════════════════════════════════════════════════
+
+To narrow down the problem area, try these in order:
+
+TEST 1: Is plugin file itself valid PHP?
+  Command: php -l wp-content/plugins/wpway/wpway.php
+  Expected: "No syntax errors"
+  If error = Fix syntax in wpway.php
+
+TEST 2: Is bootstrap file valid?
+  Command: php -l wp-content/plugins/wpway/includes/bootstrap-simple.php
+  Expected: "No syntax errors"
+  If error = Fix syntax in bootstrap-simple.php
+
+TEST 3: Is menu file valid?
+  Command: php -l wp-content/plugins/wpway/includes/admin/menu.php
+  Expected: "No syntax errors"
+  If error = Fix syntax in menu.php
+
+════════════════════════════════════════════════════════════════════════════════
+STEP 4: Send Me The Error
+════════════════════════════════════════════════════════════════════════════════
+
+Once you have the error message from debug.log:
+
+Send:
+1. The exact error message (copy-paste from debug.log)
+2. The file name and line number mentioned
+3. Any additional context from the log
+
+I'll fix it immediately! 🔧
+
+════════════════════════════════════════════════════════════════════════════════
+IF YOU CAN'T ACCESS WORDPRESS AT ALL
+════════════════════════════════════════════════════════════════════════════════
+
+If WordPress won't load at all:
+
+1. Deactivate the plugin temporarily:
+
+   Via FTP/File Manager:
+   • Rename: wp-content/plugins/wpway/wpway.php
+     to: wp-content/plugins/wpway/wpway.php.bak
+   
+   • Website should load now
+   
+   • Check error log to see what was wrong
+
+2. Once you see the error, rename the file back and tell me the error
+
+════════════════════════════════════════════════════════════════════════════════
+CHECKLIST BEFORE REPORTING
+════════════════════════════════════════════════════════════════════════════════
+
+□ Enabled WP_DEBUG in wp-config.php
+□ Checked wp-content/debug.log for errors
+□ Copy-pasted exact error message
+□ Noted file name and line number
+□ Verified wpway.php, bootstrap-simple.php, and menu.php exist
+□ Ran PHP syntax check (php -l) on files
+
+════════════════════════════════════════════════════════════════════════════════
+
+Now follow these steps and send me the error from debug.log! 🎯
