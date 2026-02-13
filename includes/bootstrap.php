@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) exit;
 
 final class Bootstrap {
     private static $initialized = false;
+    private static $files_loaded = [];
 
     /**
      * Initialize framework
@@ -21,47 +22,89 @@ final class Bootstrap {
 
         self::$initialized = true;
 
-        // Load configuration
-        require_once __DIR__ . '/config.php';
-        Config\Configuration::init(plugin_dir_url(__DIR__ . '/../wpway.php'));
+        try {
+            // Load configuration
+            if (self::loadFile(__DIR__ . '/config.php')) {
+                \WPWay\Config\Configuration::init(plugin_dir_url(__DIR__ . '/../wpway.php'));
+            }
 
-        // Load core framework
-        require_once __DIR__ . '/core/framework.php';
-        require_once __DIR__ . '/core/component.php';
-        require_once __DIR__ . '/core/virtual-dom.php';
+            // Load core framework
+            self::loadFile(__DIR__ . '/core/framework.php');
+            self::loadFile(__DIR__ . '/core/component.php');
+            self::loadFile(__DIR__ . '/core/virtual-dom.php');
 
-        // Load routing
-        require_once __DIR__ . '/router/router.php';
+            // Load routing
+            self::loadFile(__DIR__ . '/router/router.php');
 
-        // Load state management
-        require_once __DIR__ . '/state/store.php';
+            // Load state management
+            self::loadFile(__DIR__ . '/state/store.php');
 
-        // Load Gutenberg integration
-        require_once __DIR__ . '/gutenberg/blocks.php';
+            // Load Gutenberg integration
+            self::loadFile(__DIR__ . '/gutenberg/blocks.php');
 
-        // Load SSR/Hydration
-        require_once __DIR__ . '/ssr/hydration.php';
+            // Load SSR/Hydration
+            self::loadFile(__DIR__ . '/ssr/hydration.php');
 
-        // Load plugin ecosystem
-        require_once __DIR__ . '/plugin-api/plugin-system.php';
+            // Load plugin ecosystem
+            self::loadFile(__DIR__ . '/plugin-api/plugin-system.php');
 
-        // Load performance optimizer
-        require_once __DIR__ . '/performance/optimizer.php';
+            // Load performance optimizer
+            self::loadFile(__DIR__ . '/performance/optimizer.php');
 
-        // Load dev tools
-        require_once __DIR__ . '/dev-tools.php';
+            // Load dev tools
+            self::loadFile(__DIR__ . '/dev-tools.php');
 
-        // Load REST API
-        require_once __DIR__ . '/rest-api-enhanced.php';
+            // Load REST API
+            self::loadFile(__DIR__ . '/rest-api-enhanced.php');
 
-        // Load example components
-        require_once __DIR__ . '/example-components.php';
+            // Load example components
+            self::loadFile(__DIR__ . '/example-components.php');
 
-        // Setup WordPress hooks
-        self::setupHooks();
+            // Setup WordPress hooks
+            self::setupHooks();
 
-        // Log initialization
-        DevTools\Console::log('WPWay Framework initialized');
+            // Log initialization
+            if (class_exists('WPWay\DevTools\Console')) {
+                DevTools\Console::log('WPWay Framework initialized successfully');
+            }
+
+        } catch (\Throwable $e) {
+            // Log error to debug.log
+            error_log('WPWay Framework Error: ' . $e->getMessage());
+            error_log('File: ' . $e->getFile() . ' Line: ' . $e->getLine());
+            error_log('Trace: ' . $e->getTraceAsString());
+            
+            // Show admin notice
+            add_action('admin_notices', function() use ($e) {
+                echo '<div class="notice notice-error"><p><strong>WPWay Error:</strong> ' . 
+                     esc_html($e->getMessage()) . '</p></div>';
+            });
+        }
+    }
+
+    /**
+     * Safely load a file
+     */
+    private static function loadFile($file) {
+        if (!file_exists($file)) {
+            error_log('WPWay: File not found - ' . $file);
+            return false;
+        }
+        
+        // Prevent duplicate loading
+        if (in_array($file, self::$files_loaded)) {
+            return true;
+        }
+
+        try {
+            require_once $file;
+            self::$files_loaded[] = $file;
+            return true;
+        } catch (\Throwable $e) {
+            error_log('WPWay: Error loading file ' . $file . ' - ' . $e->getMessage());
+            return false;
+        }
+    }
     }
 
     /**
