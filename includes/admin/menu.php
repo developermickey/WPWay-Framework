@@ -6,25 +6,22 @@
 
 if (!defined('ABSPATH')) exit;
 
-// Define callback functions FIRST in global namespace
-// This ensures WordPress can find them when the menu calls them
-
-function wpway_dashboard_page();
-function wpway_components_page();
-function wpway_pages_page();
-function wpway_code_editor_page();
-function wpway_settings_page();
-function wpway_documentation_page();
+error_log('[WPWay Menu] ========== MENU FILE LOADED ==========');
 
 // ============================================================================
 // 1. REGISTER ADMIN MENUS - Runs on admin_menu hook
 // ============================================================================
 
 add_action('admin_menu', function() {
+    error_log('[WPWay Menu] admin_menu hook fired');
+    
     // Check user is admin
     if (!current_user_can('manage_options')) {
+        error_log('[WPWay Menu] Current user cannot manage_options');
         return;
     }
+    
+    error_log('[WPWay Menu] User has manage_options capability - proceeding with menu registration');
 
     // Main WPWay Menu
     add_menu_page(
@@ -36,6 +33,8 @@ add_action('admin_menu', function() {
         'dashicons-layout',                     // Icon
         76                                      // Position
     );
+    
+    error_log('[WPWay Menu] Main menu page added');
 
     // Dashboard submenu
     add_submenu_page(
@@ -46,6 +45,8 @@ add_action('admin_menu', function() {
         'wpway-dashboard',
         'wpway_dashboard_page'
     );
+    
+    error_log('[WPWay Menu] Dashboard submenu added');
 
     // Components submenu
     add_submenu_page(
@@ -56,6 +57,8 @@ add_action('admin_menu', function() {
         'wpway-components',
         'wpway_components_page'
     );
+    
+    error_log('[WPWay Menu] Components submenu added');
 
     // Pages submenu
     add_submenu_page(
@@ -66,6 +69,8 @@ add_action('admin_menu', function() {
         'wpway-pages',
         'wpway_pages_page'
     );
+    
+    error_log('[WPWay Menu] Pages submenu added');
 
     // Code Editor submenu
     add_submenu_page(
@@ -76,6 +81,8 @@ add_action('admin_menu', function() {
         'wpway-code-editor',
         'wpway_code_editor_page'
     );
+    
+    error_log('[WPWay Menu] Code Editor submenu added');
 
     // Settings submenu
     add_submenu_page(
@@ -86,6 +93,8 @@ add_action('admin_menu', function() {
         'wpway-settings',
         'wpway_settings_page'
     );
+    
+    error_log('[WPWay Menu] Settings submenu added');
 
     // Documentation submenu
     add_submenu_page(
@@ -96,8 +105,9 @@ add_action('admin_menu', function() {
         'wpway-documentation',
         'wpway_documentation_page'
     );
-
-    error_log('[WPWay Menu] Menus registered successfully');
+    
+    error_log('[WPWay Menu] Documentation submenu added');
+    error_log('[WPWay Menu] ===== ALL MENUS REGISTERED SUCCESSFULLY =====');
 });
 
 // ============================================================================
