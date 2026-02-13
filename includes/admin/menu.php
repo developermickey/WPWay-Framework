@@ -4,9 +4,17 @@
  * Simple, direct menu registration
  */
 
-namespace WPWay\Admin;
-
 if (!defined('ABSPATH')) exit;
+
+// Define callback functions FIRST in global namespace
+// This ensures WordPress can find them when the menu calls them
+
+function wpway_dashboard_page();
+function wpway_components_page();
+function wpway_pages_page();
+function wpway_code_editor_page();
+function wpway_settings_page();
+function wpway_documentation_page();
 
 // ============================================================================
 // 1. REGISTER ADMIN MENUS - Runs on admin_menu hook
