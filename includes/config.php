@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) exit;
 class Configuration {
     private static $config = [
         'version' => '1.0.0',
-        'debug' => defined('WP_DEBUG') && WP_DEBUG,
+        'debug' => false,  // Will be set in init()
         'cache' => true,
         'ssr_enabled' => true,
         'hydration_enabled' => true,
@@ -20,7 +20,7 @@ class Configuration {
         'gutenberg_integration' => true,
         'rest_api_enabled' => true,
         'performance_optimization' => true,
-        'dev_tools' => defined('WP_DEBUG') && WP_DEBUG,
+        'dev_tools' => false,  // Will be set in init()
         
         // Asset URLs
         'assets_url' => '',
@@ -48,6 +48,13 @@ class Configuration {
      * Initialize configuration
      */
     public static function init($plugin_dir_url = '') {
+        // Set debug mode based on WordPress settings
+        if (defined('WP_DEBUG')) {
+            self::$config['debug'] = WP_DEBUG;
+            self::$config['dev_tools'] = WP_DEBUG;
+        }
+        
+        // Set asset URLs
         if (!empty($plugin_dir_url)) {
             self::$config['assets_url'] = $plugin_dir_url . 'assets/';
             self::$config['components_url'] = $plugin_dir_url . 'wpway-components/';
