@@ -105,7 +105,6 @@ final class Bootstrap {
             return false;
         }
     }
-    }
 
     /**
      * Setup WordPress integration hooks
