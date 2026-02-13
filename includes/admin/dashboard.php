@@ -14,7 +14,6 @@ class AdminDashboard {
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new self();
-            self::$instance->__init();
         }
         return self::$instance;
     }
@@ -22,7 +21,7 @@ class AdminDashboard {
     /**
      * Initialize admin dashboard
      */
-    public function __init() {
+    public function init() {
         // Add admin menu
         add_action('admin_menu', [$this, 'addMenuPages']);
         
@@ -737,7 +736,7 @@ class AdminDashboard {
     }
 }
 
-// Initialize admin dashboard
-add_action('admin_init', function() {
-    AdminDashboard::getInstance();
+// Initialize admin dashboard on plugins_loaded (earlier timing)
+add_action('plugins_loaded', function() {
+    AdminDashboard::getInstance()->init();
 });
