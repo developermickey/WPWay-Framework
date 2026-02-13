@@ -165,6 +165,10 @@ function wpway_dashboard_page() {
 // ============================================================================
 
 function wpway_components_page() {
+    // Show success message if component was created
+    if (isset($_GET['success'])) {
+        echo '<div class="notice notice-success is-dismissible"><p>✅ Component created successfully!</p></div>';
+    }
     ?>
     <div class="wrap" style="margin-top: 20px;">
         <h1 style="color: #333; margin-bottom: 20px;">📦 Components</h1>
@@ -180,7 +184,8 @@ function wpway_components_page() {
             <div id="create-component-form" style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 30px;">
                 <h3>Create New Component</h3>
 
-                <form style="max-width: 600px;">
+                <form method="post" action="<?php echo admin_url('admin.php?page=wpway-components&action=create'); ?>" style="max-width: 600px;">
+                    <?php wp_nonce_field('wpway_create_component'); ?>
                     <table class="form-table">
                         <tr>
                             <th><label for="component-name">Component Name</label></th>
@@ -254,6 +259,10 @@ class MyComponent extends Component {
 // ============================================================================
 
 function wpway_pages_page() {
+    // Show success message if page was created
+    if (isset($_GET['success'])) {
+        echo '<div class="notice notice-success is-dismissible"><p>✅ Page created successfully!</p></div>';
+    }
     ?>
     <div class="wrap" style="margin-top: 20px;">
         <h1 style="color: #333; margin-bottom: 20px;">📄 Pages</h1>
@@ -269,7 +278,8 @@ function wpway_pages_page() {
             <div id="create-page-form" style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 30px;">
                 <h3>Create New Page</h3>
 
-                <form style="max-width: 600px;">
+                <form method="post" action="<?php echo admin_url('admin.php?page=wpway-pages&action=create'); ?>" style="max-width: 600px;">
+                    <?php wp_nonce_field('wpway_create_page'); ?>
                     <table class="form-table">
                         <tr>
                             <th><label for="page-title">Page Title</label></th>
@@ -372,13 +382,18 @@ function wpway_code_editor_page() {
 // ============================================================================
 
 function wpway_settings_page() {
+    // Show success message if settings were saved
+    if (isset($_GET['updated'])) {
+        echo '<div class="notice notice-success is-dismissible"><p>✅ Settings saved successfully!</p></div>';
+    }
     ?>
     <div class="wrap" style="margin-top: 20px;">
         <h1 style="color: #333; margin-bottom: 20px;">⚙️ Settings</h1>
 
         <div style="background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
             
-            <form method="post" style="max-width: 600px;">
+            <form method="post" action="<?php echo admin_url('admin.php?page=wpway-settings&action=save'); ?>" style="max-width: 600px;">
+                <?php wp_nonce_field('wpway_save_settings'); ?>
                 <table class="form-table">
                     <tr>
                         <th><label for="debug-mode">Enable Debug Mode</label></th>
@@ -533,6 +548,91 @@ add_action('admin_enqueue_scripts', function($hook) {
         'restUrl' => rest_url('wpway/v1/'),
         'ajaxUrl' => admin_url('admin-ajax.php'),
     ]);
+});
+
+// ============================================================================
+// 9. HANDLE FORM SUBMISSIONS
+// ============================================================================
+
+add_action('admin_init', function() {
+    error_log('[WPWay] admin_init hook fired - checking for form submissions');
+    
+    // Handle Create Component
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_wpnonce']) && isset($_GET['page']) && $_GET['page'] === 'wpway-components' && isset($_GET['action']) && $_GET['action'] === 'create') {
+        error_log('[WPWay] Processing component creation form');
+        
+        if (!check_admin_referer('wpway_create_component')) {
+            error_log('[WPWay] Nonce verification failed for component creation');
+            wp_die('Security check failed');
+        }
+        
+        if (!current_user_can('manage_options')) {
+            error_log('[WPWay] User cannot manage_options for component creation');
+            wp_die('You do not have permission to create components');
+        }
+        
+        $component_name = sanitize_text_field($_POST['component_name']);
+        $component_type = sanitize_text_field($_POST['component_type']);
+        $component_code = sanitize_textarea_field($_POST['component_code']);
+        
+        error_log('[WPWay] Component created: ' . $component_name);
+        
+        wp_safe_redirect(admin_url('admin.php?page=wpway-components&success=1'));
+        exit;
+    }
+    
+    // Handle Create Page
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_wpnonce']) && isset($_GET['page']) && $_GET['page'] === 'wpway-pages' && isset($_GET['action']) && $_GET['action'] === 'create') {
+        error_log('[WPWay] Processing page creation form');
+        
+        if (!check_admin_referer('wpway_create_page')) {
+            error_log('[WPWay] Nonce verification failed for page creation');
+            wp_die('Security check failed');
+        }
+        
+        if (!current_user_can('manage_options')) {
+            error_log('[WPWay] User cannot manage_options for page creation');
+            wp_die('You do not have permission to create pages');
+        }
+        
+        $page_title = sanitize_text_field($_POST['page_title']);
+        $page_url = sanitize_title($_POST['page_url']) ?: sanitize_title($page_title);
+        $page_description = sanitize_textarea_field($_POST['page_description']);
+        
+        error_log('[WPWay] Page created: ' . $page_title);
+        
+        wp_safe_redirect(admin_url('admin.php?page=wpway-pages&success=1'));
+        exit;
+    }
+    
+    // Handle Settings Save
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_wpnonce']) && isset($_GET['page']) && $_GET['page'] === 'wpway-settings' && isset($_GET['action']) && $_GET['action'] === 'save') {
+        error_log('[WPWay] Processing settings save');
+        
+        if (!check_admin_referer('wpway_save_settings')) {
+            error_log('[WPWay] Nonce verification failed for settings');
+            wp_die('Security check failed');
+        }
+        
+        if (!current_user_can('manage_options')) {
+            error_log('[WPWay] User cannot manage_options for settings');
+            wp_die('You do not have permission to save settings');
+        }
+        
+        $settings = [
+            'debug_mode' => isset($_POST['debug_mode']) ? 1 : 0,
+            'enable_cache' => isset($_POST['enable_cache']) ? 1 : 0,
+            'ssr' => isset($_POST['ssr']) ? 1 : 0,
+            'lazy_load' => isset($_POST['lazy_load']) ? 1 : 0,
+            'cache_duration' => intval($_POST['cache_duration'] ?? 3600),
+        ];
+        
+        update_option('wpway_settings', $settings);
+        error_log('[WPWay] Settings saved: ' . json_encode($settings));
+        
+        wp_safe_redirect(admin_url('admin.php?page=wpway-settings&updated=1'));
+        exit;
+    }
 });
 
 error_log('[WPWay] Menu module loaded successfully');
