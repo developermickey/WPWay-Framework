@@ -14,6 +14,7 @@ class AdminDashboard {
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new self();
+            self::$instance->__init();
         }
         return self::$instance;
     }
@@ -737,9 +738,6 @@ class AdminDashboard {
 }
 
 // Initialize admin dashboard
-add_action('plugins_loaded', function() {
-    if (is_admin()) {
-        $admin = AdminDashboard::getInstance();
-        $admin->__init();
-    }
+add_action('admin_init', function() {
+    AdminDashboard::getInstance();
 });
